@@ -1,0 +1,64 @@
+<mujoco model="myrobot">
+    <compiler angle="radian" />
+    <!-- <size njmax="500" nconmax="100" /> -->
+  <compiler convexhull="false"/>
+
+    <asset>
+        <mesh name="base_link" file="assets/base_link.STL" />
+        <mesh name="sideplate1" file="assets/sideplate1.STL" />
+        <mesh name="sideplate2" file="assets/sideplate2.STL" />
+        <mesh name="topplate" file="assets/topplate.STL" />
+        <mesh name="bumper" file="assets/bumper.STL" />
+        <mesh name="FLrim" file="assets/FLrim.STL" />
+        <mesh name="FLtyre" file="assets/FLtyre.STL" />
+        <mesh name="BLrim" file="assets/BLrim.STL" />
+        <mesh name="BLtyre" file="assets/BLtyre.STL" />
+        <mesh name="FRrim" file="assets/FRrim.STL" />
+        <mesh name="FRtyre" file="assets/FRtyre.STL" />
+        <mesh name="BRrim" file="assets/BRrim.STL" />
+        <mesh name="BRtyre" file="assets/BRtyre.STL" />
+    </asset>
+    
+    <worldbody>
+        <body name="base_link" pos="0 0 0.3">
+            <!-- Base link -->
+            <!-- <joint type="free" name="base_link_joint" /> -->
+            <geom type="mesh" rgba="0.9098 0.67843 0.13725 1" mesh="base_link"/>
+            <geom pos="0.17993 0.077892 -0.057978" type="mesh" rgba="0.098039 0.098039 0.098039 1" mesh="sideplate1" />
+            <geom pos="-0.18007 0.077892 -0.057978" quat="-3.67321e-06 0 0 1" type="mesh" rgba="0.098039 0.098039 0.098039 1" mesh="sideplate2" />
+            <geom pos="-6.927e-05 0.085392 -0.11798" type="mesh" rgba="0.098039 0.098039 0.098039 1" mesh="topplate" />
+            <geom pos="-6.927e-05 -0.28961 -0.087978" type="mesh" rgba="0.0980392 0.0980392 0.0980392 1" mesh="bumper" />
+            <body name="FLrim" pos="0.20105 -0.14211 -0.11298" quat="0.307387 0.951584 0 0">
+                <!-- <inertial pos="0.0372589 -1.49549e-05 -1.45254e-05" quat="0.989443 0.14492 -0.000482773 -0.000121273" mass="0.550229" diaginertia="0.00827835 0.00459262 0.00456223" /> -->
+                <joint name="FLrimjoint" type="hinge" pos="0 0 0" axis="1 0 0" damping="30" frictionloss="1" armature="0.1" stiffness="0.02"/>
+                <geom type="mesh" rgba="0.9098 0.67843 0.13725 1" mesh="FLrim" />
+                <!-- <geom pos="0.53616 -0.65541 -0.18438" quat="0.563651 -0.426962 -0.563654 0.426962" type="mesh" rgba="0.792157 0.819608 0.933333 1" mesh="FLtyre" /> -->
+            </body>
+            <body name="BLrim" pos="0.20105 0.29789 -0.11298" quat="0.975746 0.218908 0 0">
+                <inertial pos="0.036783 2.8623e-06 -2.47002e-05" quat="0.840196 0.542283 -0.000387211 -0.000311063" mass="0.550225" diaginertia="0.00827835 0.00459279 0.00456237" />
+                <joint name="BLrimjoint" type="hinge" pos="0 0 0" axis="1 0 0" damping="30" frictionloss="1" armature="0.1" stiffness="0.02"/>
+                <geom type="mesh" rgba="0.9098 0.67843 0.13725 1" mesh="BLrim" />
+                <!-- <geom quat="0.689978 -0.15469 -0.68998 0.15469" type="mesh" rgba="0.79216 0.81961 0.93333 1" mesh="BLtyre" /> -->
+            </body>
+            <body name="FRrim" pos="-0.20119 -0.14211 -0.11298" quat="-3.67321e-06 0 0 1">
+                <inertial pos="0.0371413 1.69823e-05 -1.8438e-05" quat="0.633154 0.774025 -0.000272582 -0.000414746" mass="0.550225" diaginertia="0.00827835 0.00459259 0.00456227" />
+                <joint name="FRrimjoint" type="hinge" pos="0 0 0" axis="1 0 0" damping="30" frictionloss="1" armature="0.1" stiffness="0.02"/>
+                <geom type="mesh" rgba="0.909804 0.678431 0.137255 1" mesh="FRrim" />
+                <!-- <geom quat="0.704155 0.0645383 -0.704156 -0.0645383" type="mesh" rgba="0.79216 0.81961 0.93333 1" mesh="FRtyre" /> -->
+            </body>
+            <body name="BRrim" pos="-0.20119 0.29789 -0.11298" quat="-2.90327e-06 2.25022e-06 -0.612603 0.790391">
+                <inertial pos="0.037076 2.37583e-05 7.17692e-06" quat="0.991773 -0.128006 0.000494927 -1.30289e-05" mass="0.550225" diaginertia="0.00827835 0.00459271 0.00456229" />
+                <joint name="BRrimjoint" type="hinge" pos="0 0 0" axis="1 0 0" damping="30" frictionloss="1" armature="0.1" stiffness="0.02"/>
+                <geom type="mesh" rgba="0.909804 0.678431 0.137255 1" mesh="BRrim" />
+                <!-- <geom quat="0.563461 0.427212 -0.563464 -0.427212" type="mesh" rgba="0.79216 0.81961 0.93333 1" mesh="BRtyre" /> -->
+            </body>
+        </body>
+    </worldbody>
+
+    <actuator>
+        <velocity joint="FLrimjoint" name="FLrimmotor" gear="3" kv="100" ctrlrange="-6 6" forcerange="-100 100"/>
+        <velocity joint="BLrimjoint" name="BLrimmotor" gear="3" kv="100" ctrlrange="-6 6" forcerange="-100 100"/>
+        <velocity joint="FRrimjoint" name="FRrimmotor" gear="3" kv="100" ctrlrange="-6 6" forcerange="-100 100"/>
+        <velocity joint="BRrimjoint" name="BRrimmotor" gear="3" kv="100" ctrlrange="-6 6" forcerange="-100 100"/>
+    </actuator>
+</mujoco>
